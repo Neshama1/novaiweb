@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(novaiweb VERSION 1.0)
+project(novaiweb VERSION 0.1.0)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
