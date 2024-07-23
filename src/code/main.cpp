@@ -19,8 +19,8 @@
 #define PROJECT_DESCRIPTION "Browser for KDE based on MauiKit"
 #define PROJECT_YEAR "2024"
 #define PRODUCT_NAME "novaiweb"
-#define PROJECT_PAGE "https://novaiweb.kde.org"
-#define REPORT_PAGE "https://bugs.kde.org/enter_bug.cgi?product=novaiweb"
+#define PROJECT_PAGE "https://www.novaflowos.com"
+#define REPORT_PAGE "https://github.com/Neshama1/novaiweb"
 
 int main(int argc, char *argv[])
 {
