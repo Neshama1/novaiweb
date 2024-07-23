@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Nova iWeb
+Comment=Browser for KDE based on MauiKit
+TryExec=novaiweb
+Exec=novaiweb %U
+Terminal=false
+Type=Application
+GenericName=
+StartupNotify=true
+Icon=novaiweb
+Categories=Network;WebBrowser;
+MimeType=text/html;x-scheme-handler/http;x-scheme-handler/https;
+SingleMainWindow=true

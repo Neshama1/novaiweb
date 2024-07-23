@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component type="desktop">
+  <id>org.kde.novaiweb.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>LGPL-3.0</project_license>
+  <name>Nova iWeb</name>
+  <summary>Browser for KDE based on MauiKit</summary>
+  <description>
+    <p>Built with the most advanced Linux technology</p>
+  </description>
+  <url type="homepage">https://www.novaflowos.com</url>
+  <url type="bugtracker">https://github.com/Neshama1/novaiweb</url>
+  <url type="donation">https://www.paypal.com/donate/?hosted_button_id=732KFQ5LYQPTN</url>
+  <screenshots>
+
+  </screenshots>
+  <provides>
+    <binary>novaiweb</binary>
+  </provides>
+  <content_rating type="oars-1.0"/>
+  <recommends>
+    <control>pointing</control>
+    <control>keyboard</control>
+    <control>touch</control>
+  </recommends>
+  <project_group>KDE</project_group>
+  <releases>
+
+  </releases>
+</component>

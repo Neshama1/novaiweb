@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>StandardPage.qml</file>
+        <file>History.qml</file>
+        <file>Bookmarks.qml</file>
+        <file>Downloads.qml</file>
+        <file>FindTextInPage.qml</file>
+        <file>SettingsDialog.qml</file>
+        <file>WebView.qml</file>
+        <file>ContextualMenu.qml</file>
+        <file>NewWindow.qml</file>
+    </qresource>
+</RCC>
