@@ -105,6 +105,29 @@ Maui.ApplicationWindow
         id: settingsDialog
     }
 
+    // PROFILE: DOWNLOADS AND COOKIES
+
+    WebEngineProfile {
+        id: downloadProfile
+
+        offTheRecord: false
+        persistentCookiesPolicy: WebEngineProfile.ForcePersistentCookies
+        storageName: "default"
+        cachePath: persistentStoragePath + "/cache"
+
+        onDownloadRequested: {
+            addDownload(download)
+            saveDownloads()
+            download.accept()
+            progress.visible = false
+        }
+
+        onDownloadFinished: {
+            download.accept()
+            console.info(download.receivedBytes)
+        }
+    }
+
     // WHEN STARTING APP
 
     Component.onCompleted: {
@@ -304,5 +327,19 @@ Maui.ApplicationWindow
 
         console.info("Add to downloads: " + downloadsModel.downloads[0].downloadFileName)
         console.info("URL: " + downloadsModel.downloads[0].url)
+    }
+
+    function saveDownloads() {
+
+        var datamodel = []
+
+        // Guardar descargas en ~/.config/KDE/novaiweb.conf
+        for (var i = 0; i < downloadsModel.count; i++)
+        {
+            var download = downloadsModel.downloads[i]
+            datamodel.push(download)
+        }
+
+        //downloads = JSON.stringify(datamodel)
     }
 }

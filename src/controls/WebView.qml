@@ -792,29 +792,6 @@ Maui.Page
             }
         }
 
-        // DOWNLOADS
-
-        WebEngineProfile {
-            id: downloadProfile
-
-            offTheRecord: false
-            persistentCookiesPolicy: WebEngineProfile.ForcePersistentCookies
-            storageName: "default"
-            cachePath: persistentStoragePath + "/cache"
-
-            onDownloadRequested: {
-                addDownload(download)
-                saveDownloads()
-                download.accept()
-                progress.visible = false
-            }
-
-            onDownloadFinished: {
-                download.accept()
-                console.info(download.receivedBytes)
-            }
-        }
-
         // SCROLLBARS
 
         ScrollBar {
