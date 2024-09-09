@@ -14,11 +14,13 @@ Maui.Page
 
     property alias url : _webView.url
     property alias webView : _webView
+    property alias loading : progress
     readonly property string title : _webView.title.length ? _webView.title : "Nova iWeb"
     readonly property string iconName: _webView.icon
 
     property string bookmarks: ""
     property string downloads: ""
+    property bool otherNavigationType: false
 
     Maui.TabViewInfo.tabTitle: title
     Maui.TabViewInfo.tabToolTipText: _webView.url
@@ -416,6 +418,7 @@ Maui.Page
                 }
 
                 onLoadingChanged: {
+                    console.info("status: " + loadRequest.status)
                     if (loadRequest.status == WebEngineView.LoadSucceededStatus)
                     {
                         progress.visible = false
@@ -426,7 +429,7 @@ Maui.Page
                     }
                     else
                     {
-                        progress.visible = true
+                        progress.visible = navigationType == 6 ? false : true
                     }
                 }
 
@@ -499,6 +502,7 @@ Maui.Page
                 {
                     console.log("Navigation requested",  request.navigationType)
                     request.action = WebEngineNavigationRequest.AcceptRequest
+                    navigationType = request.navigationType
                 }
 
                 // SETTINGS FOR NEW DIALOG
@@ -712,7 +716,7 @@ Maui.Page
                 }
                 else
                 {
-                    progress.visible = true
+                    progress.visible = control.otherNavigationType ? false : true
                 }
             }
 
@@ -787,7 +791,7 @@ Maui.Page
 
             onNavigationRequested:
             {
-                console.log("Navigation requested",  request.navigationType)
+                control.otherNavigationType = request.navigationType == 6 ? true : (request.navigationType == 4 ? undefined : false)
                 request.action = WebEngineNavigationRequest.AcceptRequest
             }
         }

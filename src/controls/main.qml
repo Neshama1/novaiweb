@@ -119,7 +119,7 @@ Maui.ApplicationWindow
             addDownload(download)
             saveDownloads()
             download.accept()
-            progress.visible = false
+            stackView.globalTabView.tabAt(stackView.globalTabView.currentIndex).loading.visible = false
         }
 
         onDownloadFinished: {

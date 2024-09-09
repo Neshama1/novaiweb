@@ -107,6 +107,29 @@ Maui.ApplicationWindow
         id: settingsDialog
     }
 
+    // PROFILE: DOWNLOADS AND COOKIES
+
+    WebEngineProfile {
+        id: downloadProfile
+
+        offTheRecord: false
+        persistentCookiesPolicy: WebEngineProfile.ForcePersistentCookies
+        storageName: "default"
+        cachePath: persistentStoragePath + "/cache"
+
+        onDownloadRequested: {
+            addDownload(download)
+            saveDownloads()
+            download.accept()
+            stackView.globalTabView.tabAt(stackView.globalTabView.currentIndex).loading.visible = false
+        }
+
+        onDownloadFinished: {
+            download.accept()
+            console.info(download.receivedBytes)
+        }
+    }
+
     // WHEN STARTING APP
 
     Component.onCompleted: {
