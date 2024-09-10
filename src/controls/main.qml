@@ -111,7 +111,7 @@ Maui.ApplicationWindow
         id: downloadProfile
 
         offTheRecord: false
-        persistentCookiesPolicy: WebEngineProfile.AllowPersistentCookies
+        persistentCookiesPolicy: WebEngineProfile.ForcePersistentCookies
         storageName: "default"
         cachePath: persistentStoragePath + "/cache"
 
