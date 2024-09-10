@@ -1,0 +1,84 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 78,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 80,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 82,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "novaiweb",
+			"destination" : "share/metainfo",
+			"paths" : 
+			[
+				{
+					"from" : "src/data/project.appdata.xml",
+					"to" : "org.kde.novaiweb.appdata.xml"
+				}
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "novaiweb",
+			"destination" : "share/applications",
+			"paths" : 
+			[
+				{
+					"from" : "src/data/project.desktop",
+					"to" : "org.kde.novaiweb.desktop"
+				}
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "novaiweb",
+			"destination" : "share/icons/hicolor/scalable/apps",
+			"paths" : 
+			[
+				{
+					"from" : "src/assets/logo.svg",
+					"to" : "novaiweb.svg"
+				}
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	}
+}

@@ -1,0 +1,26 @@
+{
+	"BUILD_DIR" : "/home/mike/Devel/QML/MauiKit/novaiweb/build/src/novaiweb_autogen",
+	"CMAKE_BINARY_DIR" : "/home/mike/Devel/QML/MauiKit/novaiweb/build",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/mike/Devel/QML/MauiKit/novaiweb/build/src",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/mike/Devel/QML/MauiKit/novaiweb/src",
+	"CMAKE_SOURCE_DIR" : "/home/mike/Devel/QML/MauiKit/novaiweb",
+	"CROSS_CONFIG" : false,
+	"GENERATOR" : "Ninja",
+	"INCLUDE_DIR" : "/home/mike/Devel/QML/MauiKit/novaiweb/build/src/novaiweb_autogen/include",
+	"INPUTS" : 
+	[
+		"/home/mike/Devel/QML/MauiKit/novaiweb/src/assets/logo.png",
+		"/home/mike/Devel/QML/MauiKit/novaiweb/src/assets/logo.svg"
+	],
+	"LOCK_FILE" : "/home/mike/Devel/QML/MauiKit/novaiweb/build/src/CMakeFiles/novaiweb_autogen.dir/AutoRcc_assets_GBFAFXFCVO_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "assets" ],
+	"OUTPUT_CHECKSUM" : "GBFAFXFCVO",
+	"OUTPUT_NAME" : "qrc_assets.cpp",
+	"RCC_EXECUTABLE" : "/usr/lib64/qt5/bin/rcc",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "/home/mike/Devel/QML/MauiKit/novaiweb/build/src/CMakeFiles/novaiweb_autogen.dir/AutoRcc_assets_GBFAFXFCVO_Used.txt",
+	"SOURCE" : "/home/mike/Devel/QML/MauiKit/novaiweb/src/assets/assets.qrc",
+	"USE_BETTER_GRAPH" : false,
+	"VERBOSITY" : 0
+}

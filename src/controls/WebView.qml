@@ -767,8 +767,6 @@ Maui.Page
             }
 
             onFindTextFinished: {
-                // findInPageResultIndex = result.activeMatch;
-                // findInPageResultCount = result.numberOfMatches;
             }
 
             onFileDialogRequested:
