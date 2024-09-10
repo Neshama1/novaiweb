@@ -377,6 +377,8 @@ Maui.Page
             }
 
             headBar.preferredHeight: 45
+            headBar.background: null
+            headBar.visible: false
 
             headBar.farRightContent: [
                 ToolButton
@@ -409,6 +411,10 @@ Maui.Page
                 backgroundColor: Maui.Theme.backgroundColor
                 clip: true
 
+                Behavior on opacity {
+                    NumberAnimation { duration: 400 }
+                }
+
                 // SLOTS FOR NEW DIALOG
 
                 onContextMenuRequested: {
@@ -422,24 +428,16 @@ Maui.Page
                     if (loadRequest.status == WebEngineView.LoadSucceededStatus)
                     {
                         progress.visible = false
-                        var dateString = new Date().toLocaleDateString(Qt.locale("es_ES"))
-                        var timeString = new Date().toLocaleTimeString(Qt.locale("es_ES"))
-                        var dateTime = dateString + " " + timeString
-                        addTodB(webView.title, webView.url, webView.icon, dateTime)
+                        addTodB(webView.title, webView.url, webView.icon, Qt.formatDateTime(new Date(), "yyyyMMdd-hhmmss.zzz"))
                     }
                     else
                     {
-                        progress.visible = navigationType == 6 ? false : true
+                        progress.visible = control.otherNavigationType ? false : true
                     }
                 }
 
-                //onUrlChanged: {
-                //    searchField.text = url
-                //    _webView.isInBookmarks = checkBookmark(url)
-                //}
-
-                onFeaturePermissionRequested: {
-                    grantFeaturePermission(securityOrigin, feature, true)
+                onUrlChanged: {
+                    webViewDialog.opacity = 0
                 }
 
                 onFullScreenRequested: {
@@ -492,7 +490,6 @@ Maui.Page
 
                     request.destination == WebEngineView.NewViewInTab ? tabView.addTab(browserComponent, {"url": request.requestedUrl}, false) : undefined
                     request.destination == WebEngineView.NewViewInWindow ? newWindow(request.requestedUrl,false) : undefined
-                    request.destination == WebEngineView.NewViewInDialog ? newWindow(request.requestedUrl,true) : undefined
 
                     //request.destination == WebEngineView.NewViewInWindow ? tabView.addTab(browserComponent, {"url": request.requestedUrl}, false) : undefined
                     //request.destination == WebEngineView.NewViewInDialog ? tabView.addTab(browserComponent, {"url": request.requestedUrl}, false) : undefined
@@ -501,8 +498,15 @@ Maui.Page
                 onNavigationRequested:
                 {
                     console.log("Navigation requested",  request.navigationType)
+                    control.otherNavigationType = request.navigationType == 6 ? true : (request.navigationType == 4 ? undefined : false)
                     request.action = WebEngineNavigationRequest.AcceptRequest
-                    navigationType = request.navigationType
+                }
+
+                onOpacityChanged: {
+                    if (webViewDialog.opacity == 0)
+                    {
+                        webViewDialog.opacity = 1
+                    }
                 }
 
                 // SETTINGS FOR NEW DIALOG
@@ -655,6 +659,10 @@ Maui.Page
             backgroundColor: Maui.Theme.backgroundColor
             clip: true
 
+            Behavior on opacity {
+                NumberAnimation { duration: 400 }
+            }
+
             layer.enabled: true
             layer.effect: OpacityMask {
                 maskSource: Item {
@@ -780,7 +788,12 @@ Maui.Page
 
                 request.destination == WebEngineView.NewViewInTab ? tabView.addTab(browserComponent, {"url": request.requestedUrl}, false) : undefined
                 request.destination == WebEngineView.NewViewInWindow ? newWindow(request.requestedUrl,false) : undefined
-                request.destination == WebEngineView.NewViewInDialog ? openDialog(request.requestedUrl) : undefined
+
+                if (request.destination == WebEngineView.NewViewInDialog)
+                {
+                    request.openIn(webViewDialog)
+                    newViewInDialog.visible = true
+                }
 
                 //request.destination == WebEngineView.NewViewInWindow ? tabView.addTab(browserComponent, {"url": request.requestedUrl}, false) : undefined
                 //request.destination == WebEngineView.NewViewInDialog ? tabView.addTab(browserComponent, {"url": request.requestedUrl}, false) : undefined
@@ -789,7 +802,16 @@ Maui.Page
             onNavigationRequested:
             {
                 control.otherNavigationType = request.navigationType == 6 ? true : (request.navigationType == 4 ? undefined : false)
+                newViewInDialog.visible = false
                 request.action = WebEngineNavigationRequest.AcceptRequest
+            }
+
+            onOpacityChanged:
+            {
+                if (_webView.opacity == 0)
+                {
+                    _webView.opacity = 0.90
+                }
             }
         }
 
