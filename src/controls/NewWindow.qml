@@ -1,13 +1,13 @@
-import QtQuick 2.15
-import QtQml 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
-import QtQuick.Window 2.15
-import org.mauikit.controls 1.3 as Maui
-import Qt.labs.settings 1.0
-import QtWebEngine 1.10
-import QtQuick.LocalStorage 2.15
-import QtGraphicalEffects 1.15
+import QtQuick
+import QtQml
+import QtQml.Models
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Window
+import QtQuick.LocalStorage
+import Qt5Compat.GraphicalEffects
+import QtWebEngine
+import org.mauikit.controls as Maui
 
 Maui.ApplicationWindow
 {
@@ -27,7 +27,7 @@ Maui.ApplicationWindow
     property bool visibleTabBar: true
     property bool visibleToolBar: true
 
-    visibility: Window.Normal
+    visibility: Window.Windowed
 
     // TRANSLUCENCY
 
@@ -153,7 +153,7 @@ Maui.ApplicationWindow
 
         Component.onCompleted: {
             opendB()
-            stackView.push("qrc:/StandardPage.qml")
+            stackView.push("StandardPage.qml")
         }
     }
 

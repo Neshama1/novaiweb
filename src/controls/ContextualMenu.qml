@@ -1,9 +1,9 @@
-import QtQuick 2.14
-import QtQml 2.12
-import QtQuick.Controls 2.13
-import QtQuick.Layouts 1.3
-import QtWebEngine 1.10
-import org.mauikit.controls 1.3 as Maui
+import QtQuick
+import QtQml
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtWebEngine
+import org.mauikit.controls as Maui
 
 Maui.ContextualMenu
 {
@@ -23,21 +23,21 @@ Maui.ContextualMenu
         Action
         {
             icon.name: "edit-undo"
-            enabled:   request.editFlags & ContextMenuRequest.CanUndo
+            enabled: request.editFlags & ContextMenuRequest.CanUndo
             onTriggered: webview.triggerWebAction(WebEngineView.Undo)
         }
 
         Action
         {
             icon.name: "edit-redo"
-            enabled:   request.editFlags & ContextMenuRequest.CanRedo
+            enabled: request.editFlags & ContextMenuRequest.CanRedo
             onTriggered: webView.triggerWebAction(WebEngineView.Redo)
         }
 
         Action
         {
             icon.name: "edit-cut"
-            enabled:   request.editFlags & ContextMenuRequest.CanCut
+            enabled: request.editFlags & ContextMenuRequest.CanCut
             onTriggered: webView.triggerWebAction(WebEngineView.Cut)
         }
     }
@@ -46,7 +46,7 @@ Maui.ContextualMenu
     {
         text: i18n("Paste")
         height: visible? implicitHeight : 00 - control.spacing
-        visible:  request.editFlags & ContextMenuRequest.CanPaste
+        visible: request.editFlags & ContextMenuRequest.CanPaste
         onTriggered:
         {
             //control.close()
@@ -72,7 +72,7 @@ Maui.ContextualMenu
     {
         text: i18n("Select All")
         height: visible? implicitHeight : 00 - control.spacing
-        visible:  request.editFlags & ContextMenuRequest.CanSelectAll
+        visible: request.editFlags & ContextMenuRequest.CanSelectAll
         onTriggered:
         {
             webView.triggerWebAction(WebEngineView.SelectAll);
@@ -84,7 +84,7 @@ Maui.ContextualMenu
     {
         text: i18n("Copy Text")
         height: visible? implicitHeight : 00 - control.spacing
-        visible:  request.editFlags & ContextMenuRequest.CanCopy
+        visible: request.editFlags & ContextMenuRequest.CanCopy
         onTriggered:
         {
             Maui.Handy.copyTextToClipboard(control.request.selectedText)
@@ -278,5 +278,4 @@ Maui.ContextualMenu
               : i18n("Show controls")
         onTriggered: webView.triggerWebAction(WebEngineView.ToggleMediaControls)
     }
-
 }

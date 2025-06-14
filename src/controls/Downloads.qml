@@ -1,12 +1,12 @@
-import QtQuick 2.15
-import QtQml 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
-import QtQuick.Window 2.15
-import org.mauikit.controls 1.3 as Maui
-import Qt.labs.settings 1.0
-import QtGraphicalEffects 1.15
-import QtQml.Models 2.15
+import QtCore
+import QtQuick
+import QtQml
+import QtQml.Models
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Window
+import Qt5Compat.GraphicalEffects
+import org.mauikit.controls as Maui
 
 Maui.ShadowedRectangle {
     id: rectDownloadsPage
@@ -169,7 +169,7 @@ Maui.ShadowedRectangle {
             height: downloadsModel.count > 6 ? (60 * 6 + 40) : undefined
 
             onHeightChanged: {
-                rectDownloadsPage.height = 120 + listBrowser.height
+                rectDownloadsPage.height = 130 + listBrowser.height
             }
 
             model: downloadsModelFiltered

@@ -1,12 +1,12 @@
-import QtQuick 2.15
-import QtQml 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
-import QtQuick.Window 2.15
-import org.mauikit.controls 1.3 as Maui
-import Qt.labs.settings 1.0
-import QtGraphicalEffects 1.15
-import QtQml.Models 2.15
+import QtCore
+import QtQuick
+import QtQml
+import QtQml.Models
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Window
+import Qt5Compat.GraphicalEffects
+import org.mauikit.controls as Maui
 
 Maui.ShadowedRectangle {
     id: rectBookmarksPage
@@ -168,7 +168,7 @@ Maui.ShadowedRectangle {
             height: bookmarksModel.count > 6 ? (60 * 6 + 40) : undefined
 
             onHeightChanged: {
-                rectBookmarksPage.height = 120 + listBrowser.height
+                rectBookmarksPage.height = 130 + listBrowser.height
             }
 
             model: bookmarksModelFiltered
@@ -222,8 +222,8 @@ Maui.ShadowedRectangle {
 
                 label1.text: bookmarksModel.get(index).title
                 label2.text: Qt.resolvedUrl(bookmarksModel.get(index).url)
-                iconSource: Qt.resolvedUrl(bookmarksModel.get(index).iconUrl)
-                iconSizeHint: Maui.Style.iconSizes.medium
+                //iconSource: Qt.resolvedUrl(bookmarksModel.get(index).iconUrl)
+                //iconSizeHint: Maui.Style.iconSizes.medium
 
                 ToolButton
                 {
@@ -305,7 +305,11 @@ Maui.ShadowedRectangle {
         // Filter
 
         for (var i = 0; i < bookmarksModel.count; i++) {
-            bookmarksModel.get(i).title.toLowerCase().includes(query.toLowerCase()) == false && Qt.resolvedUrl(bookmarksModel.get(i).url).toLowerCase().includes(query.toLowerCase()) == false ? bookmarksModelFiltered.items.removeGroups(i, 1, "filteredItems") : undefined
+
+            var title = bookmarksModel.get(i).title
+            var url = Qt.resolvedUrl(bookmarksModel.get(i).url).toString()
+
+            title.toLowerCase().includes(query.toLowerCase()) == false && url.toLowerCase().includes(query.toLowerCase()) == false ? bookmarksModelFiltered.items.removeGroups(i, 1, "filteredItems") : undefined
         }
     }
 }

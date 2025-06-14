@@ -1,12 +1,11 @@
-import QtQuick 2.15
-import QtQml 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
-import QtQuick.Window 2.15
-import org.mauikit.controls 1.3 as Maui
-import Qt.labs.settings 1.0
-import QtGraphicalEffects 1.15
-import QtQml.Models 2.15
+import QtQuick
+import QtQml
+import QtQml.Models
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Window
+import Qt5Compat.GraphicalEffects
+import org.mauikit.controls as Maui
 
 Maui.ShadowedRectangle {
     id: rectHistoryPage
@@ -161,7 +160,7 @@ Maui.ShadowedRectangle {
             height: history.rows.length > 6 ? (60 * 6 + 40) : undefined
 
             onHeightChanged: {
-                rectHistoryPage.height = 120 + listBrowser.height
+                rectHistoryPage.height = 130 + listBrowser.height
             }
 
             model: history.rows.length
@@ -199,8 +198,8 @@ Maui.ShadowedRectangle {
 
                 label1.text: history.rows.item(index).title
                 label2.text: history.rows.item(index).url
-                iconSource: Qt.resolvedUrl(history.rows.item(index).iconUrl)
-                iconSizeHint: Maui.Style.iconSizes.medium
+                //iconSource: Qt.resolvedUrl(history.rows.item(index).iconUrl)
+                //iconSizeHint: Maui.Style.iconSizes.medium
 
                 ToolButton
                 {

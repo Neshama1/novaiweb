@@ -1,9 +1,9 @@
 // SettingsDialog.qml
 
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.12
-import org.mauikit.controls 1.3 as Maui
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import org.mauikit.controls as Maui
 
 Maui.SettingsDialog
 {
@@ -52,7 +52,7 @@ Maui.SettingsDialog
         title: i18n("Navigation")
         description: i18n("Configure the app basic navigation features")
 
-        Maui.SectionItem
+        Maui.FlexSectionItem
         {
             label1.text: i18n("General")
             label2.text: i18n("Configure global preferences.")
@@ -65,7 +65,7 @@ Maui.SettingsDialog
             }
         }
 
-        Maui.SectionItem
+        Maui.FlexSectionItem
         {
             label1.text: i18n("Features")
             label2.text: i18n("Configure the browser plugins and features.")
@@ -78,7 +78,7 @@ Maui.SettingsDialog
             }
         }
 
-        Maui.SectionItem
+        Maui.FlexSectionItem
         {
             label1.text: i18n("JavaScript")
             label2.text: i18n("Configure JavaScript behaviour.")
@@ -91,7 +91,7 @@ Maui.SettingsDialog
             }
         }
 
-        Maui.SectionItem
+        Maui.FlexSectionItem
         {
             label1.text: i18n("Security & Privacy")
             label2.text: i18n("Configure the look and feel of the editor. The settings are applied globally")
@@ -111,7 +111,7 @@ Maui.SettingsDialog
         description: i18n("Configure other features")
 
         /*
-        Maui.SectionItem
+        Maui.FlexSectionItem
         {
             label1.text: i18n("Restore Session")
             label2.text: i18n("Open previous tabs.")
@@ -125,7 +125,7 @@ Maui.SettingsDialog
             }
         }
 
-        Maui.SectionItem
+        Maui.FlexSectionItem
         {
             label1.text: i18n("Switch to Tab")
             label2.text: i18n("When opening a new link jump to the new tab.")
@@ -140,7 +140,7 @@ Maui.SettingsDialog
         }
         */
 
-        Maui.SectionItem
+        Maui.FlexSectionItem
         {
             label1.text: i18n("Auto Load Images")
             label2.text: i18n("Automatically loads images on web pages.")
@@ -163,69 +163,67 @@ Maui.SettingsDialog
         {
             title: i18n("General")
 
-            Maui.SectionItem
-            {
-                label1.text: i18n("Home Page")
-                label2.text: i18n("Page to load initially and default.")
-                columns: 1
-
-                TextField
-                {
-                    Layout.fillWidth: true
-                    text: appSettings.homePage
-                    onPressed: appSettings.homePage = text
-                }
-            }
-
-            Maui.SectionItem
-            {
-                label1.text: i18n("Search Engine")
-                label2.text: i18n("Engine to be use for default searching content.")
-                columns: 1
-
-                TextField
-                {
-                    Layout.fillWidth: true
-                    text: appSettings.searchEnginePage
-                    onPressed: appSettings.searchEnginePage = text
-                }
-            }
-
-            /*
-            Maui.SectionGroup
-            {
-                title: i18n("Downloads")
-
+            Maui.SectionGroup {
                 Maui.SectionItem
                 {
-                    label1.text: i18n("Downloads Path")
-                    label2.text: i18n("Pick a path where files will be saved.")
-                    columns: 1
+                    label1.text: i18n("Home Page")
+                    label2.text: i18n("Page to load initially and default.")
 
                     TextField
                     {
                         Layout.fillWidth: true
-                        text: appSettings.downloadsPath
+                        Layout.preferredHeight: 40
+                        text: appSettings.homePage
+                        onPressed: appSettings.homePage = text
                     }
                 }
 
                 Maui.SectionItem
                 {
-                    label1.text: i18n("Auto Save")
-                    label2.text: i18n("Download files without asking.")
+                    label1.text: i18n("Search Engine")
+                    label2.text: i18n("Engine to be use for default searching content.")
 
-                    Switch
+                    TextField
                     {
-                        Layout.fillHeight: true
-                        checkable: true
-                        checked:  appSettings.autoSave
-                        onToggled: appSettings.autoSave = ! appSettings.autoSave
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 40
+                        text: appSettings.searchEnginePage
+                        onPressed: appSettings.searchEnginePage = text
                     }
                 }
 
-            }
-            */
+                /*
+                Maui.SectionGroup {
+                    title: i18n("Downloads")
 
+                    Maui.FlexSectionItem
+                    {
+                        label1.text: i18n("Downloads Path")
+                        label2.text: i18n("Pick a path where files will be saved.")
+
+                        TextField
+                        {
+                            Layout.fillWidth: true
+                            text: appSettings.downloadsPath
+                        }
+                    }
+
+                    Maui.FlexSectionItem
+                    {
+                        label1.text: i18n("Auto Save")
+                        label2.text: i18n("Download files without asking.")
+
+                        Switch
+                        {
+                            Layout.fillHeight: true
+                            checkable: true
+                            checked:  appSettings.autoSave
+                            onToggled: appSettings.autoSave = ! appSettings.autoSave
+                        }
+                    }
+                }
+                */
+            }
         }
     }
 
@@ -239,7 +237,7 @@ Maui.SettingsDialog
 
             Maui.SectionGroup
             {
-                Maui.SectionItem
+                Maui.FlexSectionItem
                 {
                     label1.text: i18n("Accelerated 2D Canvas")
                     label2.text: i18n("Specifies whether the HTML 5 2D canvas should be an OpenGL framebuffer. This makes many painting operations faster, but slows down pixel access.")
@@ -253,7 +251,7 @@ Maui.SettingsDialog
                     }
                 }
 
-                Maui.SectionItem
+                Maui.FlexSectionItem
                 {
                     label1.text: i18n("Hyperlink Auditing")
                     label2.text: i18n("Enables support for the ping attribute for hyperlinks.")
@@ -268,7 +266,7 @@ Maui.SettingsDialog
                 }
 
                 /*
-                Maui.SectionItem
+                Maui.FlexSectionItem
                 {
                     label1.text: i18n("PDF Viewer")
                     label2.text: i18n("PDF documents will be opened in the internal PDF viewer instead of being downloaded.")
@@ -283,7 +281,7 @@ Maui.SettingsDialog
                 }
                 */
 
-                Maui.SectionItem
+                Maui.FlexSectionItem
                 {
                     label1.text: i18n("Plugins Enabled")
                     label2.text: i18n("Enables support for Pepper plugins, such as the Flash player.")
@@ -309,7 +307,7 @@ Maui.SettingsDialog
 
             Maui.SectionGroup
             {
-                Maui.SectionItem
+                Maui.FlexSectionItem
                 {
                     label1.text: i18n("Javascript Enabled")
                     label2.text: i18n("Enables the running of JavaScript programs.")
@@ -323,7 +321,7 @@ Maui.SettingsDialog
                     }
                 }
 
-                Maui.SectionItem
+                Maui.FlexSectionItem
                 {
                     label1.text: i18n("Javascript Can Access Clipboard")
                     label2.text: i18n("Allows JavaScript programs to read from or write to the clipboard.")
@@ -337,7 +335,7 @@ Maui.SettingsDialog
                     }
                 }
 
-                Maui.SectionItem
+                Maui.FlexSectionItem
                 {
                     label1.text: i18n("Javascript Can Paste")
                     label2.text: i18n("Enables JavaScript execCommand(paste).")
@@ -351,7 +349,7 @@ Maui.SettingsDialog
                     }
                 }
 
-                Maui.SectionItem
+                Maui.FlexSectionItem
                 {
                     label1.text: i18n("Allow Window Activation From JavaScript")
                     label2.text: i18n("Allows the window.focus() method in JavaScript.")
@@ -378,7 +376,7 @@ Maui.SettingsDialog
 
             Maui.SectionGroup
             {
-                Maui.SectionItem
+                Maui.FlexSectionItem
                 {
                     label1.text: i18n("Allow Geolocation On Insecure Origins")
                     label2.text: i18n("Only secure origins such as HTTPS have been able to request Geolocation features.")
@@ -392,7 +390,7 @@ Maui.SettingsDialog
                     }
                 }
 
-                Maui.SectionItem
+                Maui.FlexSectionItem
                 {
                     label1.text: i18n("Allow Running Insecure Content")
                     label2.text: i18n("By default, HTTPS pages cannot run JavaScript, CSS, plugins or web-sockets from HTTP URLs.")
@@ -407,7 +405,7 @@ Maui.SettingsDialog
                 }
 
 
-                Maui.SectionItem
+                Maui.FlexSectionItem
                 {
                     label1.text: i18n("DNS Prefetch Enabled")
                     label2.text: i18n("Enables speculative prefetching of DNS records for HTML links before they are activated.")
@@ -421,7 +419,7 @@ Maui.SettingsDialog
                     }
                 }
 
-                Maui.SectionItem
+                Maui.FlexSectionItem
                 {
                     label1.text: i18n("Local Content Can Access File Urls")
                     label2.text: i18n("Allows locally loaded documents to access other local URLs.")
@@ -435,7 +433,7 @@ Maui.SettingsDialog
                     }
                 }
 
-                Maui.SectionItem
+                Maui.FlexSectionItem
                 {
                     label1.text: i18n("Local Content Can Access Remote Urls")
                     label2.text: i18n("Allows locally loaded documents to access remote URLs.")
@@ -449,7 +447,7 @@ Maui.SettingsDialog
                     }
                 }
 
-                Maui.SectionItem
+                Maui.FlexSectionItem
                 {
                     label1.text: i18n("Local Storage")
                     label2.text: i18n("Enables support for the HTML 5 local storage feature.")
@@ -463,7 +461,7 @@ Maui.SettingsDialog
                     }
                 }
 
-                Maui.SectionItem
+                Maui.FlexSectionItem
                 {
                     label1.text: i18n("WebRTC Public Interfaces Only")
                     label2.text: i18n("Limits WebRTC to public IP addresses only. When disabled WebRTC may also use local network IP addresses, but remote hosts can also see your local network IP address.")

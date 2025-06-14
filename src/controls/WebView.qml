@@ -1,29 +1,30 @@
-import QtQuick 2.15
-import QtQml 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.12
-import org.mauikit.controls 1.3 as Maui
-import Qt.labs.settings 1.0
-import QtWebEngine 1.10
-import QtGraphicalEffects 1.15
-import QtQuick.Window 2.15
+import QtCore
+import QtQml
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Window
+import Qt5Compat.GraphicalEffects
+import QtWebEngine
+import org.mauikit.controls as Maui
 
 Maui.Page
 {
     id: control
 
-    property alias url : _webView.url
-    property alias webView : _webView
-    property alias loading : progress
-    readonly property string title : _webView.title.length ? _webView.title : "Nova iWeb"
+    property alias url: _webView.url
+    property alias webView: _webView
+    property alias loading: progress
+    readonly property string title: _webView.title.length ? _webView.title : "Nova iWeb"
     readonly property string iconName: _webView.icon
 
     property string bookmarks: ""
     property string downloads: ""
     property bool otherNavigationType: false
 
-    Maui.TabViewInfo.tabTitle: title
-    Maui.TabViewInfo.tabToolTipText: _webView.url
+    //Maui.TabViewInfo.tabTitle: title
+    //Maui.TabViewInfo.tabToolTipText: _webView.url
+
     Maui.Theme.inherit: false
     Maui.Theme.colorSet: Maui.Theme.Window
 
@@ -32,7 +33,7 @@ Maui.Page
     headBar.visible: nDialog ? visibleToolBar : true
     headBar.preferredHeight: 42
 
-    showCSDControls: false
+    Maui.Controls.showCSD: true
 
     // ANIMATIONS
 
@@ -78,16 +79,15 @@ Maui.Page
         Layout.leftMargin: 10
         Layout.rightMargin: 10
         Layout.preferredWidth: parent.height
-        Maui.Theme.inherit: false
-        Maui.Theme.colorSet: Maui.Theme.View
+        Layout.preferredHeight: parent.height - 10
 
         radius: width
-        color: Maui.Theme.backgroundColor
-        border.width: 3
-        border.color: Qt.darker(Maui.Theme.backgroundColor,1.1)
+        color: Qt.darker(Maui.Theme.backgroundColor,1.04)
+        //border.width: 1
+        //border.color: Qt.darker(Maui.Theme.backgroundColor,1.1)
 
         opacity: 0.40
-        scale: 1.3
+        scale: 1
 
         Label {
             id: lbApp
@@ -95,8 +95,8 @@ Maui.Page
             anchors.margins: 5
             text: "iWeb"
             font.weight: Font.Bold
-            font.pixelSize: 8
-            opacity: 0.90
+            font.pixelSize: 10
+            opacity: 0.60
 
             Maui.ProgressIndicator
             {
@@ -109,26 +109,6 @@ Maui.Page
     }
 
     headBar.leftContent: [
-        ToolButton
-        {
-            visible: false
-            icon.name: "tab-new-background"
-            flat: true
-            onClicked: {
-            }
-        },
-
-        Maui.Badge
-        {
-            id: badge
-            Maui.Theme.inherit: false
-            Maui.Theme.colorSet: Maui.Theme.View
-            opacity: 0.80
-            color: Maui.Theme.backgroundColor
-            text: tabView.count
-            onClicked: popupTabs.open()
-        },
-
         ToolButton
         {
             icon.name: "draw-arrow-back"
@@ -160,17 +140,17 @@ Maui.Page
 
         onAccepted: openUrl(text)
 
-//      onCleared:
-
         actions: [
+            /*
             Action
             {
                 icon.name: "go-home"
                 onTriggered:
                 {
-                    webView.url = appSettings.homePage
+                    _webView.url = appSettings.homePage
                 }
             },
+            */
             Action
             {
                 icon.name: _webView.isInBookmarks ? "bookmarks-bookmarked" : "bookmarks"
@@ -197,14 +177,132 @@ Maui.Page
             onClicked: popupDownloads.visible =! popupDownloads.visible
         },
 
+        Maui.Badge
+        {
+            id: badge
+            Maui.Theme.colorSet: Maui.Theme.View
+            color: Maui.Theme.backgroundColor
+            opacity: 0.60
+            scale: 0.7
+            text: tabView.count
+            font.bold: true
+            font.pixelSize: 16
+            onClicked: popupTabs.open()
+        },
+
         Maui.ToolButtonMenu
         {
             icon.name: "overflow-menu"
+
             MenuItem
             {
                 text: i18n("New Tab")
                 icon.name: "list-add"
                 onTriggered: tabView.addTab(browserComponent, {"url": appSettings.homePage}, false);
+            }
+
+            MenuItem
+            {
+                text: i18n("Settings")
+                icon.name: "settings-configure"
+                onTriggered: settingsDialog.open()
+            }
+
+            MenuSeparator {}
+
+            MenuItem
+            {
+                text: i18n("Light")
+                checkable: true
+                autoExclusive: true
+                onTriggered: {
+                    Maui.Style.styleType = Maui.Style.Light
+                    styleType = Maui.Style.styleType
+                }
+                checked: Maui.Style.styleType === Maui.Style.Light
+            }
+
+            MenuItem
+            {
+                text: i18n("Dark")
+                checkable: true
+                autoExclusive: true
+                onTriggered: {
+                    Maui.Style.styleType = Maui.Style.Dark
+                    styleType = Maui.Style.styleType
+                }
+                checked: Maui.Style.styleType === Maui.Style.Dark
+            }
+
+            MenuItem
+            {
+                text: i18n("Custom")
+                checkable: true
+                autoExclusive: true
+                onTriggered: {
+                    Maui.Style.styleType = Maui.Style.Auto
+                    styleType = Maui.Style.styleType
+                }
+                checked: Maui.Style.styleType === Maui.Style.Auto
+            }
+
+            MenuSeparator {}
+
+            MenuItem
+            {
+                text: i18n("Find In Page")
+                icon.name: "edit-find"
+                onTriggered: {
+                    popupFind.visible = true
+                }
+            }
+
+            MenuItem
+            {
+                text: i18n("Go Home")
+                icon.name: "go-home"
+                onTriggered: {
+                    _webView.url = appSettings.homePage
+                }
+            }
+
+            MenuItem
+            {
+                text: i18n("Refresh")
+                icon.name: "view-refresh"
+                onTriggered: stackView.globalTabView.tabAt(stackView.globalTabView.currentIndex).webView.reload()
+            }
+
+            MenuItem
+            {
+                text: i18n("Bookmarks")
+                icon.name: "bookmarks"
+                onTriggered: openBookmarks()
+            }
+
+            MenuItem
+            {
+                text: i18n("History")
+                icon.name: "deep-history"
+                onTriggered: openHistory()
+
+            }
+
+            MenuItem
+            {
+                text: i18n("Downloads")
+                icon.name: "folder-downloads"
+                onTriggered: openDownloads()
+
+            }
+
+            MenuSeparator {}
+
+            MenuItem
+            {
+                text: i18n("About")
+                icon.name: "documentinfo"
+                onTriggered: root.about()
             }
 
             /*
@@ -213,9 +311,6 @@ Maui.Page
                 text: i18n("Incognito Tab")
                 icon.name: "actor"
             }
-            */
-
-            MenuSeparator {}
 
             Maui.MenuItemActionRow
             {
@@ -246,73 +341,11 @@ Maui.Page
                     }
                 }
             }
-
-            MenuSeparator {}
-
-            MenuItem
-            {
-                text: i18n("Bookmarks")
-                icon.name: "bookmarks"
-                onTriggered: openBookmarks()
-            }
-
-            MenuItem
-            {
-                text: i18n("History")
-                icon.name: "deep-history"
-                onTriggered: openHistory()
-
-            }
-
-            MenuItem
-            {
-                text: i18n("Downloads")
-                icon.name: "folder-downloads"
-                onTriggered: openDownloads()
-
-            }
-
-            MenuSeparator {}
-
-            MenuItem
-            {
-                text: i18n("Find In Page")
-                icon.name: "edit-find"
-                //checked: _browserView.searchFieldVisible
-                onTriggered: {
-                    console.info("entra 1")
-                    popupFind.visible = true
-                }
-            }
-
-            MenuSeparator {}
-
-            MenuItem
-            {
-                text: i18n("Settings")
-                icon.name: "settings-configure"
-                onTriggered: settingsDialog.open()
-            }
-
-            MenuItem
-            {
-                text: i18n("About")
-                icon.name: "documentinfo"
-                onTriggered: root.about()
-            }
-
-        },
-
-        ToolButton
-        {
-            icon.name: "view-refresh"
-            flat: true
-            onClicked: {
-                stackView.globalTabView.tabAt(stackView.globalTabView.currentIndex).webView.reload()
-            }
+            */
         }
     ]
 
+    /*
     headBar.farRightContent: Maui.CloseButton {
         //icon.name: "view-refresh"
         flat: true
@@ -320,6 +353,7 @@ Maui.Page
             root.close()
         }
     }
+    */
 
     // CONTEXTUAL MENU
 
@@ -425,7 +459,7 @@ Maui.Page
 
                 onLoadingChanged: {
                     console.info("status: " + loadRequest.status)
-                    if (loadRequest.status == WebEngineView.LoadSucceededStatus)
+                    if (loadingInfo.status == WebEngineView.LoadSucceededStatus)
                     {
                         progress.visible = false
                         addTodB(webView.title, webView.url, webView.icon, Qt.formatDateTime(new Date(), "yyyyMMdd-hhmmss.zzz"))
@@ -483,13 +517,13 @@ Maui.Page
                     console.log("FILE DIALOG REQUESTED", request.mode, FileDialogRequest.FileModeSave)
                 }
 
-                onNewViewRequested:
+                onNewWindowRequested:
                 {
                     if (!request.userInitiated)
                         return;
 
-                    request.destination == WebEngineView.NewViewInTab ? tabView.addTab(browserComponent, {"url": request.requestedUrl}, false) : undefined
-                    request.destination == WebEngineView.NewViewInWindow ? newWindow(request.requestedUrl,false) : undefined
+                    request.destination == WebEngineNewWindowRequest.InNewTab ? tabView.addTab(browserComponent, {"url": request.requestedUrl}, false) : undefined
+                    request.destination == WebEngineNewWindowRequest.InNewWindow ? newWindow(request.requestedUrl,false) : undefined
 
                     //request.destination == WebEngineView.NewViewInWindow ? tabView.addTab(browserComponent, {"url": request.requestedUrl}, false) : undefined
                     //request.destination == WebEngineView.NewViewInDialog ? tabView.addTab(browserComponent, {"url": request.requestedUrl}, false) : undefined
@@ -572,8 +606,9 @@ Maui.Page
         Maui.ListBrowser {
             id: list
 
-            anchors.fill: parent
-            anchors.margins: 10
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.margins: 10
 
             horizontalScrollBarPolicy: ScrollBar.AlwaysOff
             verticalScrollBarPolicy: ScrollBar.AlwaysOff
@@ -592,7 +627,7 @@ Maui.Page
 
                     label1.text: tabView.tabAt(index).webView.title
                     label2.text: tabView.tabAt(index).webView.url
-                    iconSource: tabView.tabAt(index).webView.icon
+                    //iconSource: tabView.tabAt(index).webView.icon
 
                     iconSizeHint: Maui.Style.iconSizes.medium
 
@@ -621,12 +656,11 @@ Maui.Page
     // PAGE (WEB VIEW)
 
     Maui.ShadowedRectangle {
-
         id: rectWebView
 
         anchors.fill: parent
-        anchors.leftMargin: 7
-        anchors.rightMargin: 7
+        anchors.leftMargin: 6
+        anchors.rightMargin: 6
         anchors.topMargin: 0
         anchors.bottomMargin: 0
 
@@ -643,16 +677,16 @@ Maui.Page
 
         // WEB VIEW
 
-        WebEngineView
-        {
+        WebEngineView {
             id: _webView
 
             anchors.fill: parent
 
             property bool isInBookmarks
 
-            x: -hbar.position * width
-            y: -vbar.position * height
+            //x: -hbar.position * width
+            //y: -vbar.position * height
+
             opacity: 0.90
             profile: downloadProfile
             zoomFactor: appSettings.zoomFactor
@@ -688,7 +722,7 @@ Maui.Page
             settings.dnsPrefetchEnabled : appSettings.dnsPrefetchEnabled
             settings.errorPageEnabled : appSettings.errorPageEnabled
             settings.focusOnNavigationEnabled : appSettings.focusOnNavigationEnabled
-//          settings.fullscreensupportEnabled : appSettings.fullscreenSupportEnabled
+            //          settings.fullscreensupportEnabled : appSettings.fullscreenSupportEnabled
             settings.hyperlinkAuditingEnabled : appSettings.hyperlinkAuditingEnabled
             settings.javascriptCanAccessClipboard : appSettings.javascriptCanAccessClipboard
             settings.javascriptCanOpenWindows : appSettings.javascriptCanOpenWindows
@@ -717,10 +751,10 @@ Maui.Page
             }
 
             onLoadingChanged: {
-                if (loadRequest.status == WebEngineView.LoadSucceededStatus)
+                if (loadingInfo.status == WebEngineView.LoadSucceededStatus)
                 {
                     progress.visible = false
-                    addTodB(webView.title, webView.url, webView.icon, Qt.formatDateTime(new Date(), "yyyyMMdd-hhmmss.zzz"))
+                    addTodB(webView.title, _webView.url, webView.icon, Qt.formatDateTime(new Date(), "yyyyMMdd-hhmmss.zzz"))
                 }
                 else
                 {
@@ -781,15 +815,15 @@ Maui.Page
                 console.log("FILE DIALOG REQUESTED", request.mode, FileDialogRequest.FileModeSave)
             }
 
-            onNewViewRequested:
+            onNewWindowRequested:
             {
-                if(!request.userInitiated)
+                if (!request.userInitiated)
                     return;
 
-                request.destination == WebEngineView.NewViewInTab ? tabView.addTab(browserComponent, {"url": request.requestedUrl}, false) : undefined
-                request.destination == WebEngineView.NewViewInWindow ? newWindow(request.requestedUrl,false) : undefined
+                request.destination == WebEngineNewWindowRequest.InNewTab ? tabView.addTab(browserComponent, {"url": request.requestedUrl}, false) : undefined
+                request.destination == WebEngineNewWindowRequest.InNewWindow ? newWindow(request.requestedUrl,false) : undefined
 
-                if (request.destination == WebEngineView.NewViewInDialog)
+                if (request.destination == WebEngineNewWindowRequest.InNewDialog)
                 {
                     request.openIn(webViewDialog)
                     newViewInDialog.visible = true
@@ -801,7 +835,7 @@ Maui.Page
 
             onNavigationRequested:
             {
-                control.otherNavigationType = request.navigationType == 6 ? true : (request.navigationType == 4 ? undefined : false)
+                control.otherNavigationType = request.navigationType == 6 ? true : (request.navigationType == WebEngineNavigationRequest.REloadNavigation ? undefined : false)
                 newViewInDialog.visible = false
                 request.action = WebEngineNavigationRequest.AcceptRequest
             }
@@ -814,8 +848,6 @@ Maui.Page
                 }
             }
         }
-
-        // SCROLLBARS
 
         ScrollBar {
             id: vbar
@@ -845,6 +877,61 @@ Maui.Page
             anchors.margins: 5
             policy: ScrollBar.AsNeeded
             visible: false
+        }
+    }
+
+    Maui.PieButton {
+
+        id: zoomActions
+
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.margins: Maui.Style.space.big
+
+        width: 160
+        height: 50
+
+        icon.name: "list-add"
+
+        Action
+        {
+            icon.name: "zoom-out"
+            onTriggered: appSettings.zoomFactor = Math.max(appSettings.zoomFactor-0.25, 0.25)
+        }
+
+        Action
+        {
+            icon.name: "zoom-in"
+            onTriggered: appSettings.zoomFactor = Math.min(appSettings.zoomFactor+0.25, 5.0)
+        }
+
+        Action
+        {
+            icon.name: "zoom-original"
+            onTriggered: appSettings.zoomFactor = 1.0
+        }
+    }
+
+    // PROFILE: DOWNLOADS AND COOKIES
+
+    WebEngineProfile {
+        id: downloadProfile
+
+        offTheRecord: false
+        persistentCookiesPolicy: WebEngineProfile.AllowPersistentCookies
+        storageName: "default"
+        cachePath: persistentStoragePath + "/cache"
+
+        onDownloadRequested: {
+            addDownload(download)
+            saveDownloads()
+            download.accept()
+            stackView.globalTabView.tabAt(stackView.globalTabView.currentIndex).loading.visible = false
+        }
+
+        onDownloadFinished: {
+            download.accept()
+            console.info(download.receivedBytes)
         }
     }
 
@@ -944,6 +1031,7 @@ Maui.Page
         bookmarks = JSON.stringify(datamodel)
     }
 
+    /*
     function saveDownloads()
     {
         var datamodel = []
@@ -957,6 +1045,7 @@ Maui.Page
         }
         //downloads = JSON.stringify(datamodel)
     }
+    */
 
     function openDialog(urlDialog)
     {

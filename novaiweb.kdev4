@@ -1,4 +1,5 @@
 [Project]
-Name=novaiweb
+CreatedFrom=CMakeLists.txt
 Manager=KDevCMakeManager
+Name=novaiweb
 VersionControl=

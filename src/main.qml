@@ -1,31 +1,16 @@
-import QtQuick 2.15
-import QtQml 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
-import QtQuick.Window 2.15
-import org.mauikit.controls 1.3 as Maui
-import Qt.labs.settings 1.0
-import QtWebEngine 1.10
-import QtQuick.LocalStorage 2.15
-import QtGraphicalEffects 1.15
+import QtCore
+import QtQml
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Window
+import QtQuick.LocalStorage
+import QtWebEngine
+import org.mauikit.controls as Maui
+import org.kde.novaiweb 1.0
 
 Maui.ApplicationWindow
 {
     id: root
-
-    // PROPERTIES
-
-    property var db
-    property var history
-    property bool nDialog: false
-    property WebEngineView currentBrowser
-
-    visibility: Window.Normal
-
-    // DEFAULT WIDTH AND HEIGHT
-
-    width: Screen.desktopAvailableWidth - Screen.desktopAvailableWidth * 36 / 100
-    height: Screen.desktopAvailableHeight - Screen.desktopAvailableHeight * 13 / 100
 
     // TRANSLUCENCY
 
@@ -48,6 +33,14 @@ Maui.ApplicationWindow
         id: downloadsModel
         property var downloads: []
     }
+
+    // PROPERTIES
+
+    property var db
+    property var history
+    property bool nDialog: false
+    property WebEngineView currentBrowser
+	property int styleType: Maui.Style.Auto
 
     // SETTINGS
 
@@ -99,59 +92,59 @@ Maui.ApplicationWindow
         property bool autoSave : false
 
         property bool findCaseSensitively: false
+
+		property alias styleType: root.styleType
     }
 
     SettingsDialog {
         id: settingsDialog
     }
 
-    // PROFILE: DOWNLOADS AND COOKIES
+    // DEFAULT WIDTH AND HEIGHT
 
-    WebEngineProfile {
-        id: downloadProfile
+    width: Screen.desktopAvailableWidth - Screen.desktopAvailableWidth * 36 / 100
+    height: Screen.desktopAvailableHeight - Screen.desktopAvailableHeight * 13 / 100
 
-        offTheRecord: false
-        persistentCookiesPolicy: WebEngineProfile.AllowPersistentCookies
-        storageName: "default"
-        cachePath: persistentStoragePath + "/cache"
+	// VISIBILITY
 
-        onDownloadRequested: {
-            addDownload(download)
-            saveDownloads()
-            download.accept()
-            stackView.globalTabView.tabAt(stackView.globalTabView.currentIndex).loading.visible = false
-        }
+	visibility: Window.Windowed
 
-        onDownloadFinished: {
-            download.accept()
-            console.info(download.receivedBytes)
-        }
+    // THEME MANAGER
+
+    ThemeManager {
+        id: themeManager
     }
 
-    // WHEN STARTING APP
+	// WHEN STARTING APP
 
     Component.onCompleted: {
+
+        // Theme
+        Maui.Style.styleType = styleType === Maui.Style.Auto ? themeManager.styleType : styleType
+        Maui.Style.accentColor = "aquamarine"
+        Maui.Style.windowControlsTheme = themeManager.windowControlsTheme
     }
 
     // MAIN PAGE
 
     Maui.Page {
         anchors.fill: parent
-        headBar.visible: false
 
+        headBar.visible: false
         background.opacity: 0
 
         StackView {
             id: stackView
             anchors.fill: parent
             clip: true
+            background.opacity: 0
             property var globalTabView
             property var globalBrowserComponent
         }
 
         Component.onCompleted: {
             opendB()
-            stackView.push("qrc:/StandardPage.qml")
+            stackView.push("controls/StandardPage.qml")
         }
     }
 
@@ -259,7 +252,7 @@ Maui.ApplicationWindow
 
     function newWindow(urls,newDialog)
     {
-        var nComponent = Qt.createComponent("NewWindow.qml")
+        var nComponent = Qt.createComponent("controls/NewWindow.qml")
 
         console.info("dialog: ", newDialog)
         console.info("url: ", urls)

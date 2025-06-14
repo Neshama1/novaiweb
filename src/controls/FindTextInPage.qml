@@ -1,13 +1,12 @@
-import QtQuick 2.15
-import QtQml 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
-import QtQuick.Window 2.15
-import org.mauikit.controls 1.3 as Maui
-import Qt.labs.settings 1.0
-import QtWebEngine 1.10
-import QtGraphicalEffects 1.15
-import QtQml.Models 2.15
+import QtQuick
+import QtQml
+import QtQml.Models
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Window
+import Qt5Compat.GraphicalEffects
+import QtWebEngine
+import org.mauikit.controls as Maui
 
 Maui.ShadowedRectangle {
     id: rectFind
@@ -142,18 +141,13 @@ Maui.ShadowedRectangle {
 
             description: i18n("Configure the behaviour")
 
-            Maui.SectionItem
-            {
+            Maui.FlexSectionItem {
                 template.label1.text: i18n("Case sensitively")
                 template.label1.font.weight: Font.Normal
 
                 label2.text: i18n("Defines wether uppercase and lowercase letters ar treated as distinct")
 
                 Switch {
-                    //anchors.right: parent.right
-                    //anchors.verticalCenter: parent.verticalCenter
-                    Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                    Layout.margins: 10
                     checkable: true
                     checked: appSettings.findCaseSensitively ? true : false
                     onToggled: {
