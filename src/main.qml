@@ -6,6 +6,7 @@ import QtQuick.Window
 import QtQuick.LocalStorage
 import QtWebEngine
 import org.mauikit.controls as Maui
+import org.mauikit.filebrowsing as FB
 import org.kde.novaiweb 1.0
 
 Maui.ApplicationWindow
@@ -98,6 +99,12 @@ Maui.ApplicationWindow
 
     SettingsDialog {
         id: settingsDialog
+    }
+
+    // FILE DIALOG
+
+    FB.FileDialog {
+        id: flDialog
     }
 
     // DEFAULT WIDTH AND HEIGHT

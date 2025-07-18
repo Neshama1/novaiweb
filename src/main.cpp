@@ -46,8 +46,8 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     // ABOUT DIALOG
 
-    KAboutData about(QStringLiteral("Nova iWeb"),
-                     QStringLiteral("novaiweb"),
+    KAboutData about(QStringLiteral("novaiweb"),
+                     QStringLiteral("Nova iWeb"),
                      NOVAIWEB_VERSION_STRING,
                      i18n("Browser for KDE based on MauiKit."),
                      KAboutLicense::LGPL_V3,
