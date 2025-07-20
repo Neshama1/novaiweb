@@ -781,6 +781,7 @@ Maui.Page
                     rectWebView.anchors.topMargin = 0
                     rectWebView.anchors.bottomMargin = 0
                     rectWebView.radius = 5
+                    zoomActions.visible = true
                     root.visibility = Window.Windowed
                 }
                 else
@@ -791,6 +792,7 @@ Maui.Page
                     rectWebView.anchors.topMargin = 0
                     rectWebView.anchors.bottomMargin = 0
                     rectWebView.radius = 0
+                    zoomActions.visible = false
                     root.visibility = Window.FullScreen
                 }
             }
