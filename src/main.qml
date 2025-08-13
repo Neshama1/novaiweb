@@ -27,6 +27,15 @@ Maui.ApplicationWindow
         }
     }
 
+    // STYLE
+
+    Maui.Style.styleType: themeManager.styleType
+    Maui.Style.accentColor: themeManager.accentColor
+    Maui.Style.defaultSpacing: themeManager.spacingSize
+    Maui.Style.defaultPadding: themeManager.paddingSize
+    Maui.Style.contentMargins: themeManager.marginSize
+    Maui.Style.radiusV: themeManager.borderRadius
+
     // MODELS
 
     ListModel { id: bookmarksModel }

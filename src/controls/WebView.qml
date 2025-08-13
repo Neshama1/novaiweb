@@ -236,14 +236,14 @@ Maui.Page
 
             MenuItem
             {
-                text: i18n("Custom")
+                text: i18n("System")
                 checkable: true
                 autoExclusive: true
                 onTriggered: {
-                    Maui.Style.styleType = Maui.Style.Auto
-                    styleType = Maui.Style.styleType
+                    Maui.Style.styleType = themeManager.styleType
+                    styleType = Maui.Style.Auto
                 }
-                checked: Maui.Style.styleType === Maui.Style.Auto
+                checked: styleType === Maui.Style.Auto
             }
 
             MenuSeparator {}
