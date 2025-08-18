@@ -16,6 +16,7 @@
 #include <MauiKit4/FileBrowsing/fmstatic.h>
 #include <MauiKit4/FileBrowsing/moduleinfo.h>
 #include <MauiMan4/thememanager.h>
+#include <MauiMan4/mauimanutils.h>
 
 #include "../novaiweb_version.h"
 

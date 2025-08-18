@@ -136,8 +136,8 @@ Maui.ApplicationWindow
     Component.onCompleted: {
 
         // Theme
+
         Maui.Style.styleType = styleType === Maui.Style.Auto ? themeManager.styleType : styleType
-        Maui.Style.accentColor = "aquamarine"
         Maui.Style.windowControlsTheme = themeManager.windowControlsTheme
     }
 
